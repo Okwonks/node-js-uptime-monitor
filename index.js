@@ -8,9 +8,11 @@ const http = require('http');
 const https = require('https');
 const url = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
-const config = require('./config');
 const fs = require('fs');
+
+const config = require('./lib/config');
 const handlers = require('./lib/handlers');
+const helpers = require('./lib/helpers');
 
 // Handle server logic for both http and https
 const severWrapper = (req, res) => {
@@ -47,7 +49,7 @@ const severWrapper = (req, res) => {
     const data = {
       path: trimmedPath,
       query: queryStringObject,
-      payload: buffer,
+      payload: helpers.parseJson(buffer),
       method,
       headers,
     };
@@ -94,6 +96,8 @@ httpsServer.listen(config.httpsPort, () => console.log(`Server up on port https:
 
 // Defining a request Router
 const router = {
-  'health': handlers.health,
-  'users': handlers.users,
+  health: handlers.health,
+  users:  handlers.users,
+  tokens: handlers.tokens,
+  checks: handlers.checks,
 };
