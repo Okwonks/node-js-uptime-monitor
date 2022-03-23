@@ -1,2 +1,5 @@
 # Ignore https folder
 https/
+
+# Ignore data folder
+.data/
