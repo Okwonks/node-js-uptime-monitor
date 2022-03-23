@@ -1,3 +1,6 @@
+/*jslint
+    node, single, indent2
+*/
 /*
  * Primary file for the API
  *
@@ -11,7 +14,7 @@ const workers = require('./lib/workers');
 const app = {};
 
 // App initialisation function
-app.init = () => {
+app.init = function () {
   // Start server
   server.init();
 
