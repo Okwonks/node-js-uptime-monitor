@@ -1,0 +1,42 @@
+#!/bin/bash -eu
+
+try() {
+	[[ $- = *e* ]]; SAVED_OPT_E=$?
+	set +e
+}
+
+catch() {
+	(( "$SAVED_OPT_E" )) && set +e
+}
+
+log() {
+	echo "[jslint] $*"
+}
+
+lintFaild() {
+	echo "!!!"
+	echo "!!! * lint failed *"
+	echo "!!!"
+}
+
+completed() {
+	log ".js files look good ✔"
+}
+
+lintRules="$(cat .jslintrc)"
+
+log "linting files..."
+
+try
+(
+	for f in ./**/*.js; do
+		log "checking $f"
+		node ./jslint.mjs "$f"
+	done
+)
+
+if [[ "$SAVED_OPT_E" ]]; then
+	lintFaild
+else
+	completed
+fi
