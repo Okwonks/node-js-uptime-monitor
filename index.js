@@ -23,5 +23,3 @@ app.init = function () {
 };
 
 app.init();
-
-module.exports = app;
