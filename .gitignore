@@ -3,5 +3,6 @@ https/
 
 # Ignore data folder
 .data/
+.logs/
 
 .env
